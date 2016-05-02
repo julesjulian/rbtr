@@ -4,6 +4,8 @@ import numpy as np
 class Robot():
     def __init__(self, table):
         self._table = table
+        self._current_position = np.array([None, None])
+        self._current_facing = None
 
     def place(self, x_coordinate, y_coordinate, facing):
         if self._table.is_safe(x_coordinate=x_coordinate, y_coordinate=y_coordinate):

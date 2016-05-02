@@ -7,7 +7,7 @@ from rbtr.table import Table
 
 
 @pytest.fixture
-def robot():
+def robot_with_mock_table():
     return Robot(table=Mock())
 
 
@@ -21,13 +21,19 @@ def test_robot_can_be_initialized():
 
 
 @pytest.mark.parametrize('x,y,f', [(1, 3, 'SOUTH'), (3, 2, 'NORTH'), (4, 4, 'WEST')])
-def test_robot_can_be_placed(robot, x, y, f):
-    robot.place(x_coordinate=x, y_coordinate=y, facing=f)
+def test_robot_can_be_placed(robot_with_mock_table, x, y, f):
+    robot_with_mock_table.place(x_coordinate=x, y_coordinate=y, facing=f)
 
 
-def test_robot_reports_correct_position(robot):
-    robot.place(x_coordinate=3, y_coordinate=2, facing='EAST')
-    assert robot.report() == "X: 3, Y: 2, F: EAST"
+@pytest.mark.parametrize('x,y,f', [(-1, 3, 'SOUTH'), (3, 5, 'NORTH'), (4, -4, 'WEST')])
+def test_robot_cannot_be_placed_off_the_table(robot_on_5_by_5_table, x, y, f):
+    robot_on_5_by_5_table.place(x_coordinate=x, y_coordinate=y, facing=f)
+    assert robot_on_5_by_5_table.report() == "X: None, Y: None, F: None"
+
+
+def test_robot_reports_correct_position(robot_with_mock_table):
+    robot_with_mock_table.place(x_coordinate=3, y_coordinate=2, facing='EAST')
+    assert robot_with_mock_table.report() == "X: 3, Y: 2, F: EAST"
 
 
 def test_robot_does_not_move_when_things_become_unsafe(robot_on_5_by_5_table):
