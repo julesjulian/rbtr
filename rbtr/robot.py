@@ -7,3 +7,6 @@ class Robot():
             self._current_x = x_coordinate
             self._current_y = y_coordinate
             self._current_facing = facing
+
+    def report(self):
+        return "X: {}, Y: {}, F: {}".format(self._current_x, self._current_y, self._current_facing)
