@@ -7,6 +7,18 @@ class Robot():
         self._current_position = np.array([None, None])
         self._current_facing = None
 
+    @property
+    def current_x(self):
+        return self._current_position[0]
+
+    @property
+    def current_y(self):
+        return self._current_position[1]
+
+    @property
+    def current_facing(self):
+        return self._current_facing
+
     def place(self, x_coordinate, y_coordinate, facing):
         if self._table.is_safe(x_coordinate=x_coordinate, y_coordinate=y_coordinate):
             self._current_position = np.array([x_coordinate, y_coordinate])
@@ -18,6 +30,9 @@ class Robot():
         )
 
     def move(self):
+        if self._current_facing is None:
+            print('Cannot move before having been placed.')
+            return
         prospective_position = self._current_position + _direction_vectors[self._current_facing]
         if self._table.is_safe(x_coordinate=prospective_position[0],
                                y_coordinate=prospective_position[1]):
