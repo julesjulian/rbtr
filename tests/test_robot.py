@@ -45,12 +45,27 @@ def test_robot_reports_correct_position(robot_on_mock_table):
 
 
 def test_robot_does_not_move_when_things_become_unsafe(robot_on_5_by_5_table):
-    robot_on_5_by_5_table.place(0, 0, 'SOUTH')
+    initial_x = 0
+    initial_y = 0
+    robot_on_5_by_5_table.place(initial_x, initial_y, 'SOUTH')
     robot_on_5_by_5_table.move()
+    assert robot_on_5_by_5_table.current_x == initial_x
+    assert robot_on_5_by_5_table.current_y == initial_y
 
 
-def test_robot_does_not_move_before_being_placed(robot_on_5_by_5_table):
-    robot_on_5_by_5_table.move()
+def test_robot_does_not_move_before_being_placed(robot_on_mock_table):
+    with pytest.raises(ValueError):
+        robot_on_mock_table.move()
+
+
+def test_robot_does_not_turn_left_before_being_placed(robot_on_mock_table):
+    with pytest.raises(ValueError):
+        robot_on_mock_table.left()
+
+
+def test_robot_does_not_turn_right_before_being_placed(robot_on_mock_table):
+    with pytest.raises(ValueError):
+        robot_on_mock_table.right()
 
 
 @pytest.mark.parametrize('x,y,f,x_final,y_final', [(1, 1, 'NORTH', 1, 2),

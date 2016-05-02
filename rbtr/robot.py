@@ -1,5 +1,14 @@
 import numpy as np
 
+_DIRECTION_VECTORS = {
+    'NORTH': np.array([0, 1]),
+    'EAST': np.array([1, 0]),
+    'SOUTH': np.array([0, -1]),
+    'WEST': np.array([-1, 0])
+}
+_ROTATION_MATRIX_90DEG_LEFT = np.array([[0, -1], [1, 0]])
+_ROTATION_MATRIX_90DEG_RIGHT = np.array([[0, 1], [-1, 0]])
+
 
 class Robot():
     def __init__(self, table):
@@ -32,9 +41,7 @@ class Robot():
         )
 
     def move(self):
-        if self._current_facing is None:
-            print('Cannot move before having been placed.')
-            return
+        self._refuse_before_placement()
         prospective_position = self._current_position + self._current_facing
         if self._table.is_safe(x_coordinate=prospective_position[0],
                                y_coordinate=prospective_position[1]):
@@ -44,18 +51,16 @@ class Robot():
                   prospective_position[0], prospective_position[1]))
 
     def left(self):
-        self._current_facing = np.dot(np.array([[0, -1], [1, 0]]), self._current_facing)
+        self._refuse_before_placement()
+        self._current_facing = np.dot(_ROTATION_MATRIX_90DEG_LEFT, self._current_facing)
 
     def right(self):
-        self._current_facing = np.dot(np.array([[0, 1], [-1, 0]]), self._current_facing)
+        self._refuse_before_placement()
+        self._current_facing = np.dot(_ROTATION_MATRIX_90DEG_RIGHT, self._current_facing)
 
-
-_DIRECTION_VECTORS = {
-    'NORTH': np.array([0, 1]),
-    'EAST': np.array([1, 0]),
-    'SOUTH': np.array([0, -1]),
-    'WEST': np.array([-1, 0])
-}
+    def _refuse_before_placement(self):
+        if (self._current_facing is None):
+            raise ValueError("Must receive 'PLACE' command before other commands can be accepted.")
 
 
 def _direction_string(direction_vector):
