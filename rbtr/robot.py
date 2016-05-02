@@ -17,6 +17,7 @@ class Robot():
     Parameters:
     * table: an instance of the class rbtr.table.Table
     """
+
     def __init__(self, table):
         self._table = table
         self._current_position = np.array([None, None])
@@ -54,9 +55,7 @@ class Robot():
             self._placed = True
 
     def report(self):
-        """
-        Return a report containing the position of the robot and the direction in which it is facing.
-        """
+        """Return a report containing the position the direction of the robot."""
         return "X: {}, Y: {}, F: {}".format(
             self._current_position[0],
             self._current_position[1],
@@ -64,10 +63,9 @@ class Robot():
         )
 
     def move(self):
-        """
-        Move the robot one square in the direction in which it is currently facing.
-        """
+        """Move the robot one square in the direction in which it is currently facing."""
         if not self._placed:
+            print("Must place the robot before moving.")
             return
         prospective_position = self._current_position + self._current_facing
         if self._table.is_safe(x_coordinate=prospective_position[0],
@@ -80,12 +78,14 @@ class Robot():
     def left(self):
         """Turn the robot towards its left by 90 degrees."""
         if not self._placed:
+            print("Must place the robot before turning.")
             return
         self._current_facing = np.dot(_ROTATION_MATRIX_90DEG_LEFT, self._current_facing)
 
     def right(self):
         """Turn the robot towards its right by 90 degrees."""
         if not self._placed:
+            print("Must place the robot before turning.")
             return
         self._current_facing = np.dot(_ROTATION_MATRIX_90DEG_RIGHT, self._current_facing)
 

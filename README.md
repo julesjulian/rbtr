@@ -1,7 +1,11 @@
 # RBTR
+Simulate a robot moving along a tabletop.
 
 ## Features
-* None so far
+* Robot can be placed on any field on the table, facing in any direction.
+* Turn left and right.
+* Move forward.
+* Built-in disaster prevention.
 
 ## Installation and Usage
 Navigate to the repository and type
