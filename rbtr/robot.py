@@ -15,6 +15,7 @@ class Robot():
         self._table = table
         self._current_position = np.array([None, None])
         self._current_facing = None
+        self._placed = False
 
     @property
     def current_x(self):
@@ -32,6 +33,7 @@ class Robot():
         if self._table.is_safe(x_coordinate=x_coordinate, y_coordinate=y_coordinate):
             self._current_position = np.array([x_coordinate, y_coordinate])
             self._current_facing = _DIRECTION_VECTORS[facing]
+            self._placed = True
 
     def report(self):
         return "X: {}, Y: {}, F: {}".format(
@@ -41,26 +43,25 @@ class Robot():
         )
 
     def move(self):
-        self._refuse_before_placement()
+        if not self._placed:
+            return
         prospective_position = self._current_position + self._current_facing
         if self._table.is_safe(x_coordinate=prospective_position[0],
                                y_coordinate=prospective_position[1]):
             self._current_position = prospective_position
         else:
-            print('Prospective position (X: {}, Y: {}) is unsafe. Refusing to move.'.format(
-                  prospective_position[0], prospective_position[1]))
+            msg = "Prospective position (X: {}, Y: {}) is unsafe. Refusing to move."
+            print(msg.format(prospective_position[0], prospective_position[1]))
 
     def left(self):
-        self._refuse_before_placement()
+        if not self._placed:
+            return
         self._current_facing = np.dot(_ROTATION_MATRIX_90DEG_LEFT, self._current_facing)
 
     def right(self):
-        self._refuse_before_placement()
+        if not self._placed:
+            return
         self._current_facing = np.dot(_ROTATION_MATRIX_90DEG_RIGHT, self._current_facing)
-
-    def _refuse_before_placement(self):
-        if (self._current_facing is None):
-            raise ValueError("Must receive 'PLACE' command before other commands can be accepted.")
 
 
 def _direction_string(direction_vector):
