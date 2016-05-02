@@ -61,3 +61,23 @@ def test_robot_moves_correctly(robot_on_mock_table, x, y, f, x_final, y_final):
     robot_on_mock_table.move()
     assert robot_on_mock_table.current_x == x_final
     assert robot_on_mock_table.current_y == y_final
+
+
+@pytest.mark.parametrize('facing_before,facing_after', [('NORTH', 'WEST'),
+                                                        ('EAST', 'NORTH'),
+                                                        ('SOUTH', 'EAST'),
+                                                        ('WEST', 'SOUTH')])
+def test_robot_turns_to_the_left_correctly(robot_on_mock_table, facing_before, facing_after):
+    robot_on_mock_table.place(1, 1, facing_before)
+    robot_on_mock_table.left()
+    assert robot_on_mock_table.current_facing == facing_after
+
+
+@pytest.mark.parametrize('facing_before,facing_after', [('NORTH', 'EAST'),
+                                                        ('EAST', 'SOUTH'),
+                                                        ('SOUTH', 'WEST'),
+                                                        ('WEST', 'NORTH')])
+def test_robot_turns_to_the_right_correctly(robot_on_mock_table, facing_before, facing_after):
+    robot_on_mock_table.place(1, 1, facing_before)
+    robot_on_mock_table.right()
+    assert robot_on_mock_table.current_facing == facing_after
