@@ -36,12 +36,12 @@ def test_robot_communicates_correct_coordinates_and_direction(robot_on_mock_tabl
 @pytest.mark.parametrize('x,y,f', [(-1, 3, 'SOUTH'), (3, 5, 'NORTH'), (4, -4, 'WEST')])
 def test_robot_cannot_be_placed_off_the_table(robot_on_5_by_5_table, x, y, f):
     robot_on_5_by_5_table.place(x_coordinate=x, y_coordinate=y, facing=f)
-    assert robot_on_5_by_5_table.report() == "X: None, Y: None, F: None"
+    assert robot_on_5_by_5_table.report() == "None,None,None"
 
 
 def test_robot_reports_correct_position(robot_on_mock_table):
     robot_on_mock_table.place(x_coordinate=3, y_coordinate=2, facing='EAST')
-    assert robot_on_mock_table.report() == "X: 3, Y: 2, F: EAST"
+    assert robot_on_mock_table.report() == "3,2,EAST"
 
 
 def test_robot_does_not_move_when_things_become_unsafe(robot_on_5_by_5_table):

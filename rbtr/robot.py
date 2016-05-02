@@ -56,7 +56,7 @@ class Robot():
 
     def report(self):
         """Return a report containing the position the direction of the robot."""
-        return "X: {}, Y: {}, F: {}".format(
+        return "{},{},{}".format(
             self._current_position[0],
             self._current_position[1],
             _direction_string(self._current_facing)
