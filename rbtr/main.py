@@ -1,3 +1,5 @@
+"""Main module for parameter setup and command line interface."""
+
 from .robot import Robot
 from .table import Table
 
@@ -18,13 +20,14 @@ UNKNOWN_COMMAND_MESSAGE = "Unknown command {}. Please try again."
 
 
 def run_from_command_line():
+    """Receive input from stdin to control the robot."""
     robot = Robot(table=Table(x_dimension=X_DIMENSION, y_dimension=Y_DIMENSION))
     print(WELCOME_MESSAGE)
     while True:
         command = input('Enter command: ')
         if command[:len('PLACE')] == 'PLACE':
-            [x, y, facing] = command[len('PLACE') + 1:].split(',')
-            robot.place(x_coordinate=int(x), y_coordinate=int(y), facing=facing)
+            [x_coord, y_coord, facing] = command[len('PLACE') + 1:].split(',')
+            robot.place(x_coordinate=int(x_coord), y_coordinate=int(y_coord), facing=facing)
         elif command == 'MOVE':
             robot.move()
         elif command == 'LEFT':

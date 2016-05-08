@@ -1,3 +1,6 @@
+"""Model of a table on which a robot can move."""
+
+
 class Table():
     """
     A model of a 2D tabletop.
@@ -6,7 +9,9 @@ class Table():
     * x_dimension: The number of squares in east-west direction.
     * y_dimension: The number of squares in north-south direction.
     """
+
     def __init__(self, x_dimension, y_dimension):
+        """Initialize a table with x and y dimensions."""
         self._x_dimension = x_dimension
         self._y_dimension = y_dimension
 

@@ -10,7 +10,7 @@ install:
 # command to run tests
 script: 
   - py.test
-  - pep8 rbtr
+  - pep8 --max-line-length=100 rbtr
   - pylint --reports=no --rcfile .pylintrc rbtr
   - pydocstyle rbtr
   - coverage run --source rbtr/ -m py.test -v

@@ -1,3 +1,5 @@
+"""Model of a robot."""
+
 import numpy as np
 
 _DIRECTION_VECTORS = {
