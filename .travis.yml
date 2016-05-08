@@ -3,15 +3,13 @@ python:
   - "3.3"
   - "3.4"
   - "3.5"
-# command to install dependencies
 install:
   - pip install .
-  - pip install -U pylint coverage pep8 pydocstyle
-# command to run tests
-script: 
-  - py.test
+  - pip install -U pylint coverage pep8 pydocstyle coveralls
+script:
+  - coverage run --source rbtr/ -m py.test -v
   - pep8 --max-line-length=100 rbtr
   - pylint --reports=no --rcfile .pylintrc rbtr
   - pydocstyle rbtr
-  - coverage run --source rbtr/ -m py.test -v
-
+after_success:
+  coveralls
