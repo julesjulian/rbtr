@@ -21,6 +21,11 @@ class Robot():
     """
 
     def __init__(self, table):
+        """
+        Initialize a robot with a table.
+
+        Once the robot is placed, it can move along the tabletop.
+        """
         self._table = table
         self._current_position = np.array([None, None])
         self._current_facing = None
