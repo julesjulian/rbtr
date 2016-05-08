@@ -1,4 +1,6 @@
 # RBTR
+[![Build Status](https://travis-ci.org/julesjulian/rbtr.svg?branch=master)](https://travis-ci.org/julesjulian/rbtr)
+
 Simulate a robot moving along a tabletop.
 
 ## Features
